@@ -1,27 +1,34 @@
 # docker-Battenberg
 This repository contains code for the whole genome sequencing subclonal copy number caller Battenberg, as described in [Nik-Zainal, Van Loo, Wedge, et al. (2012), Cell](https://www.ncbi.nlm.nih.gov/pubmed/22608083).
 
-It installs the release v2.2.9 of Battenberg and modifies the Battenberg resource paths for GRCh37 and GRCh38 based on how they are structured in the Boutros Lab cluster.
+It installs Battenberg v2.2.9 using
+- a custom battenberg.R script that allows parameterization of `max_rho`
+- a custom battenberg_wgs.R script that allows parameterization of all available options
 
-GRCh37 resources - `/hot/ref/tool-specific-input/Battenberg/download_202204/GRCh37/`
+## Resources
+GRCh37 resources - `/hot/resource/tool-specific-input/Battenberg/download_202204/GRCh37/`
 
 GRCh38 resources -
- - with `chr` name (default): `/hot/ref/tool-specific-input/Battenberg/download_202204/GRCh38/battenberg_ref_hg38_chr/`
- - without `chr` name: `/hot/ref/tool-specific-input/Battenberg/download_202204/GRCh38/battenberg_ref_hg38_non_chr/`
+ - with `chr` name (default): `/hot/resource/tool-specific-input/Battenberg/download_202204/GRCh38/battenberg_ref_hg38_chr/`
+ - without `chr` name: `/hot/resource/tool-specific-input/Battenberg/download_202204/GRCh38/battenberg_ref_hg38_non_chr/`
 
 This image can be found in docker-Battenberg's GitHub package page [here](https://github.com/uclahs-cds/docker-Battenberg/pkgs/container/battenberg).
 
 # Example Usage
 ```
 docker run --rm -u $(id -u):$(id -g) -w $(pwd) -v /hot/:/hot/ \
-    -v /hot/ref/tool-specific-input/Battenberg/download_202204/GRCh38/battenberg_ref_hg38_chr/:/opt/battenberg_reference/ \
-    battenberg:2.2.9 Rscript /usr/local/bin/battenberg_wgs.R \
+    -v /hot/resource/tool-specific-input/Battenberg/download_202204/GRCh38/battenberg_ref_hg38_chr/:/opt/battenberg_reference/ \
+    battenberg:2.2.9-bl-parametrize-max-rho Rscript /usr/local/lib/R/site-library/Battenberg/example/battenberg_wgs.R \
         -t ${tumor_sample_name} \
         -n ${normal_sample_name} \
         --tb ${tumor_bam} \
         --nb ${normal_bam} \
         -o ${sample_out_dir} \
-        --sex ${sample_sex}
+        --sex ${sample_sex} \
+        --min_ploidy 1.6 \
+        --max_ploidy 4.8 \
+        --min_rho 0.1 \
+        --max_rho 1.0
 ```
 
 # Documentation
@@ -65,9 +72,9 @@ Author: 'Mohammed Faizal Eeman Mootor', 'Ardalan Davarifar'
 
 docker-Battenberg is licensed under the GNU General Public License version 2. See the file LICENSE for the terms of the GNU GPL license.
 
-docker-Battenberg can be used to create a docker instance to use the Battenberg tool. 
+docker-Battenberg can be used to create a docker instance to use the Battenberg tool.
 
-Copyright (C) 2021-2023 University of California Los Angeles ("Boutros Lab") All rights reserved.
+Copyright (C) 2021-2024 University of California Los Angeles ("Boutros Lab") All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

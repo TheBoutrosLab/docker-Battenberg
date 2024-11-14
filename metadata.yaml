@@ -4,7 +4,7 @@ description: 'Docker repository for Wedge-lab/battenberg'
 maintainers: ['mmootor@mednet.ucla.edu']
 languages: ['Dockerfile']
 tools: ['battenberg']
-version: ['2.2.9']  # Tool version number
+version: ['2.2.9-bl-parametrize-max-rho']  # Tool version number
 purpose: 'Whole Genome Sequencing subclonal copy number caller'  # Description of what this tool does
 references: 'https://github.com/Wedge-lab/battenberg'  # is the tool/dependencies published, is there a confluence page
 image_name: 'battenberg'  # name of the new docker image

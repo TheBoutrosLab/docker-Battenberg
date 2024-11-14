@@ -16,6 +16,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.2.9-bl-parametrize-max-rho] - 2024-10-29
+### Added
+- Add `renv.lock` file containing R packages and their version
+- Add `battenberg_bl_custom.R`, a customized `battenberg.R` script that allows parameterization of `max_rho`
+- Add `battenberg_wgs_bl_custom.R`, a customized `battenberg_wgs.R` wrapper that allows parameterization of options
+
+### Changed
+- Reproduce R packages environment using `renv.lock` file
+- Install ASCAT and Battenberg using `R CMD INSTALL`
+
+### Removed
+- Remove `modify_reference_path.sh`
+
 ## [2.2.9] - 2023-06-27
 ### Added
 - Add `modify_reference_path.sh`
