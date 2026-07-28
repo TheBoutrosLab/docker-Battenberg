@@ -1,20 +1,31 @@
-ARG MINIFORGE_VERSION=23.1.0-1
+ARG MINIFORGE_VERSION=26.1.1-2
+ARG R_BASE_VERSION=4.4.1
+ARG CONDA_ENV_PATH=/opt/conda/envs/battenberg
 
-FROM condaforge/mambaforge:${MINIFORGE_VERSION} AS builder
+FROM condaforge/miniforge3:${MINIFORGE_VERSION} AS builder
 
-# Use mamba to install tools and dependencies into /usr/local
+ARG CONDA_ENV_PATH
+
+# Use mamba to install tools and dependencies into the configured environment path
 ARG HTSLIB_VERSION=1.16
 ARG ALLELECOUNT_VERSION=4.3.0
 ARG IMPUTE2_VERSION=2.3.2
-RUN mamba create -qy -p /usr/local \
+RUN mamba create -qy -p ${CONDA_ENV_PATH} \
     -c bioconda \
     -c conda-forge \
     htslib==${HTSLIB_VERSION} \
     cancerit-allelecount==${ALLELECOUNT_VERSION} \
-    impute2==${IMPUTE2_VERSION}
+    impute2==${IMPUTE2_VERSION} && \
+    mamba clean -afy
 
-FROM rocker/r-ver:4.4.1
-COPY --from=builder /usr/local /usr/local
+FROM r-base:${R_BASE_VERSION}
+
+ARG CONDA_ENV_PATH
+
+COPY --from=builder ${CONDA_ENV_PATH} ${CONDA_ENV_PATH}
+
+ENV CONDA_ENV_PATH="${CONDA_ENV_PATH}" \
+    PATH="${CONDA_ENV_PATH}/bin:${PATH}"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -59,12 +70,13 @@ RUN ln -sf /usr/local/lib/R/site-library/Battenberg/example/filter_sv_brass.R /u
 
 # Add a new user/group called bldocker
 RUN groupadd -g 500001 bldocker && \
-    useradd -r -u 500001 -g bldocker bldocker
+    useradd -m -r -u 500001 -g bldocker bldocker
 
 # Change the default user to bldocker from root
 USER bldocker
 
 LABEL maintainer="Mohammed Faizal Eeman Mootor <MMootor@mednet.ucla.edu>" \
-      org.opencontainers.image.source=https://github.com/uclahs-cds/docker-Battenberg
+      org.opencontainers.image.source=https://github.com/TheBoutrosLab/docker-Battenberg \
+      org.opencontainers.image.description="Dockerfile for Battenberg with Boutros Lab reference path defaults"
 
 CMD ["/bin/bash"]
