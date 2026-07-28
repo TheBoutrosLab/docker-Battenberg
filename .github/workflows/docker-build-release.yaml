@@ -30,7 +30,6 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: uclahs-cds/tool-Docker-action@v2.1.0
-      # Uncomment if you expect to use non-SemVer release tags
-      # with:
-      #   non-semver-tags: true
+      - uses: TheBoutrosLab/tool-Docker-action@v2
+        with:
+          non-semver-tags: true
