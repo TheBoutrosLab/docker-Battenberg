@@ -1,6 +1,7 @@
-ARG MINIFORGE_VERSION=23.1.0-1
+ARG MINIFORGE_VERSION=26.1.1-2
+ARG R_BASE_VERSION=4.4.1
 
-FROM condaforge/mambaforge:${MINIFORGE_VERSION} AS builder
+FROM condaforge/miniforge3:${MINIFORGE_VERSION} AS builder
 
 # Use mamba to install tools and dependencies into /usr/local
 ARG HTSLIB_VERSION=1.16
@@ -11,9 +12,10 @@ RUN mamba create -qy -p /usr/local \
     -c conda-forge \
     htslib==${HTSLIB_VERSION} \
     cancerit-allelecount==${ALLELECOUNT_VERSION} \
-    impute2==${IMPUTE2_VERSION}
+    impute2==${IMPUTE2_VERSION} && \
+    mamba clean -afy
 
-FROM rocker/r-ver:4.4.1
+FROM r-base:${R_BASE_VERSION}
 COPY --from=builder /usr/local /usr/local
 
 RUN apt-get update \
@@ -59,12 +61,13 @@ RUN ln -sf /usr/local/lib/R/site-library/Battenberg/example/filter_sv_brass.R /u
 
 # Add a new user/group called bldocker
 RUN groupadd -g 500001 bldocker && \
-    useradd -r -u 500001 -g bldocker bldocker
+    useradd -m -r -u 500001 -g bldocker bldocker
 
 # Change the default user to bldocker from root
 USER bldocker
 
 LABEL maintainer="Mohammed Faizal Eeman Mootor <MMootor@mednet.ucla.edu>" \
-      org.opencontainers.image.source=https://github.com/uclahs-cds/docker-Battenberg
+      org.opencontainers.image.source=https://github.com/TheBoutrosLab/docker-Battenberg \
+      org.opencontainers.image.description="Dockerfile for Battenberg with Boutros Lab reference path defaults"
 
 CMD ["/bin/bash"]
