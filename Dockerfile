@@ -1,13 +1,16 @@
 ARG MINIFORGE_VERSION=26.1.1-2
 ARG R_BASE_VERSION=4.4.1
+ARG CONDA_ENV_PATH=/opt/conda/envs/battenberg
 
 FROM condaforge/miniforge3:${MINIFORGE_VERSION} AS builder
 
-# Use mamba to install tools and dependencies into /usr/local
+ARG CONDA_ENV_PATH
+
+# Use mamba to install tools and dependencies into the configured environment path
 ARG HTSLIB_VERSION=1.16
 ARG ALLELECOUNT_VERSION=4.3.0
 ARG IMPUTE2_VERSION=2.3.2
-RUN mamba create -qy -p /usr/local \
+RUN mamba create -qy -p ${CONDA_ENV_PATH} \
     -c bioconda \
     -c conda-forge \
     htslib==${HTSLIB_VERSION} \
@@ -16,7 +19,13 @@ RUN mamba create -qy -p /usr/local \
     mamba clean -afy
 
 FROM r-base:${R_BASE_VERSION}
-COPY --from=builder /usr/local /usr/local
+
+ARG CONDA_ENV_PATH
+
+COPY --from=builder ${CONDA_ENV_PATH} ${CONDA_ENV_PATH}
+
+ENV CONDA_ENV_PATH="${CONDA_ENV_PATH}" \
+    PATH="${CONDA_ENV_PATH}/bin:${PATH}"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
