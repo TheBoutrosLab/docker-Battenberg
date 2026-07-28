@@ -32,4 +32,5 @@ jobs:
     steps:
       - uses: TheBoutrosLab/tool-Docker-action@v2
         with:
+          platforms: linux/amd64
           non-semver-tags: true
