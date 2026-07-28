@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 ## Unreleased
-### Chanded
+### Changed
 - Use the official `r-base:4.4.1` docker image
 - Replace GitHub package installation with `pkgdepends`
 - Update workflows and packaging for `SBP`
