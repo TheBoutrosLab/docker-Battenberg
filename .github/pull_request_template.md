@@ -14,7 +14,7 @@
 
 ```docker run -u $(id -u):$(id -g) –w <working-directory> -v <directory-you-want-to-mount>:<how-you-want-to-mount-it-within-the-docker> --rm <docker-image-name> <command-to-the-docker-with-all-parameters>```
 
-#### My command: 
+#### My command:
 
 ```Provide the command you ran here```
 
@@ -36,17 +36,17 @@
 
 ### Formatting
 
-- [ ] I have read the [code review guidelines](https://uclahs-cds.atlassian.net/wiki/spaces/BOUTROSLAB/pages/3187646/Code+Review+Guidelines) and the [code review best practice on GitHub check-list](https://uclahs-cds.atlassian.net/wiki/spaces/BOUTROSLAB/pages/3189956/Code+Review+Best+Practice+on+GitHub+-+Check+List).
+- [ ] I have read the [code review guidelines](https://solid-adventure-l491og6.pages.github.io/latest/code-review-guidelines/) and the [code review best practice on GitHub check-list](https://solid-adventure-l491og6.pages.github.io/latest/code-review-best-practices/).
 
-- [ ] The name of the branch is meaningful and well formatted following the [standards](https://uclahs-cds.atlassian.net/wiki/spaces/BOUTROSLAB/pages/3189956/Code+Review+Best+Practice+on+GitHub+-+Check+List), using \[AD_username (or 5 letters of AD if AD is too long)]-\[brief_description_of_branch].
+- [ ] The name of the branch is meaningful and well formatted following the [standards](https://solid-adventure-l491og6.pages.github.io/latest/code-review-best-practices/), using \[AD_username (or 5 letters of AD if AD is too long)]-\[brief_description_of_branch].
 
-- [ ] I have set up or verified the branch protection rule following the [github standards](https://uclahs-cds.atlassian.net/wiki/spaces/BOUTROSLAB/pages/3190380/GitHub+Standards#GitHubStandards-Branchprotectionrule) before opening this pull request.
+- [ ] I have verified the branch protection rules before opening this pull request.
 
 ### File Updates
 
-- [ ] I have ensured that the version number update follows the [versioning standards](https://uclahs-cds.atlassian.net/wiki/spaces/BOUTROSLAB/pages/3188472/Docker+image+versioning+standardization).
+- [ ] I have ensured that the version number update follows the [versioning standards](https://solid-adventure-l491og6.pages.github.io/latest/docker-image-versioning/).
 
-- [ ] I have updated the version number in the `Dockerfile`, `README.md` and `metadata.yaml` files.
+- [ ] I have updated the version number in the `Dockerfile`, `README.md`, and `metadata.yaml` files.
 
 - [ ] I have updated the dependencies and added my name to the maintainer list in the `Dockerfile`.
 
@@ -56,6 +56,6 @@
 
 ### GitHub Packages Auto Build Rules
 
-- [ ] I have not manually pushed this Docker image to the uclahs-cds container registry (`ghcr.io/uclahs-cds`) on [GitHub](https://github.com/orgs/uclahs-cds/packages).
+- [ ] I have not manually pushed this Docker image to TheBoutrosLab container registry (`ghcr.io/theboutroslab`) on [GitHub](https://github.com/orgs/TheBoutrosLab/packages).
 
 - [ ] **I have updated the `image_name`** in the `metadata.yaml` which is required by GitHub action to automatically build and push the image.
