@@ -46,7 +46,7 @@ Author: Yash Patel
 
 `docker-Battenberg` provides a Docker image for Battenberg with Boutros Lab reference path defaults.
 
-Copyright (C) 2026 Sanford Burnham Prebys Medical Discovery Institute ("Boutros Lab") All rights reserved.
+Copyright (C) 2026 Sanford Burnham Prebys Medical Discovery Institute ("Boutros Lab")
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
